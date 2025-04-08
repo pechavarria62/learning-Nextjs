@@ -26,5 +26,5 @@ export default function CustomersPage() {
     <div className="p-6">
       <CustomersTable customers={mockCustomers} />
     </div>
-  );
+);
 }
