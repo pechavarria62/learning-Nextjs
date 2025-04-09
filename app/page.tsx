@@ -1,35 +1,50 @@
-import AcmeLogo from '@/app/ui/acme-logo';
-import { ArrowRightIcon } from '@heroicons/react/24/outline';
+import NavLinks from './ui/dashboard/nav-links';
 import Link from 'next/link';
 
 export default function Page() {
   return (
+    
     <main className="flex min-h-screen flex-col p-6">
-      <div className="flex h-20 shrink-0 items-end rounded-lg bg-blue-500 p-4 md:h-52">
-        {/* <AcmeLogo /> */}
+      <div className=" w-48 bg-white border border-black p-4">
+      <div style={{
+        color: 'blue',
+        fontWeight: 'bold',
+        padding: '15px',
+        width:'15px',
+        height:'15px',
+        borderRadius: '15px',
+        backgroundColor: 'lightblue',
+        display: 'flex',
+        }}>
+        <NavLinks />
       </div>
-      <div className="mt-4 flex grow flex-col gap-4 md:flex-row">
-        <div className="flex flex-col justify-center gap-6 rounded-lg bg-gray-50 px-6 py-10 md:w-2/5 md:px-20">
-          <p className={`text-xl text-gray-800 md:text-3xl md:leading-normal`}>
-            <strong>klk de lo mio</strong> This is the example for the{' '}
-            <a href="https://nextjs.org/learn/" className="text-blue-500">
-              Next.js Learn Course
-            </a>
-            , brought to you by Vercel.
-          </p>
-          <Link
+        <Link href="/" className="py-2 text-gray-800 hover:text-blue-500">
+          Home
+        </Link>
+        <br/>
+        <Link href="/about" className="py-2 text-gray-800 hover:text-blue-500">
+          About
+        </Link>
+        <br/>
+        <Link href="/services" className="py-2 text-gray-800 hover:text-blue-500">
+          Services
+        </Link>
+        <br/>
+        <Link href="/contact" className="py-2 text-gray-800 hover:text-blue-500">
+          Contact
+        </Link>
+        <br/>
+        <Link
             href="/login"
             className="flex items-center gap-5 self-start rounded-lg bg-blue-500 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-blue-400 md:text-base"
           >
             <span className="mt-4 flex items-center justify-center gap-2 text-sm text-gray-500">
-              Login <ArrowRightIcon style={{ height: '12px', width: '15px' }} />
+              Login
             </span>
           </Link>
-        </div>
-        <div className="flex items-center justify-center p-6 md:w-3/5 md:px-28 md:py-12">
-          {/* Add Hero Images Here */}
-        </div>
       </div>
+      
+     
     </main>
   );
 }
