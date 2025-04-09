@@ -4,10 +4,12 @@ import {
   DocumentDuplicateIcon,
 } from '@heroicons/react/24/outline';
 
+import styles from '../nav-links.module.css';
+
 // Map of links to display in the side navigation.
 // Depending on the size of the application, this would be stored in a database.
 const links = [
-  { name: 'Home', href: '/dashboard', icon: HomeIcon },
+  { name: 'Homado', href: '/dashboard', icon: HomeIcon},
   {
     name: 'Invoices',
     href: '/dashboard/invoices',
@@ -25,10 +27,12 @@ export default function NavLinks() {
           <a
             key={link.name}
             href={link.href}
-            className="flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3"
+            className={styles.links}
+            // className="flex items-center px-2 py-2 text-sm font-medium text-gray-900 rounded-md hover:bg-gray-100 hover:text-gray-900"
           >
-            <LinkIcon className="w-6" />
-            <p className="hidden md:block">{link.name}</p>
+            <LinkIcon className={styles.icon}/>
+            
+            <p>{link.name}</p>
           </a>
         );
       })}

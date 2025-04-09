@@ -1,20 +1,21 @@
 import CustomersTable from '@/app/ui/customers/table';
+import SideNav from '../ui/dashboard/sidenav';
 
 const mockCustomers = [
   {
-    id: 1,
+    id: '1',
     name: 'John Doe',
     email: 'john.doe@example.com',
-    image_url: '/path/to/image.jpg',
+    image_url: '/customers/amy-burns.png',
     total_invoices: 5,
     total_pending: '$200',
     total_paid: '$800',
   },
   {
-    id: 2,
+    id: '2',
     name: 'Jane Smith',
     email: 'jane.smith@example.com',
-    image_url: '/path/to/image2.jpg',
+    image_url: '/customers/balazs-orban.png',
     total_invoices: 3,
     total_pending: '$100',
     total_paid: '$300',
@@ -23,8 +24,9 @@ const mockCustomers = [
 
 export default function CustomersPage() {
   return (
-    <div className="p-6">
+    <div className="pt-6 w-10 h-10 mt-100">
       <CustomersTable customers={mockCustomers} />
+      
     </div>
 );
 }
