@@ -56,3 +56,4 @@ rad.json
 *.flf
 #Test results file
 TestResults.xml
+/app/generated/prisma
