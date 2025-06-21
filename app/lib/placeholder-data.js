@@ -29,7 +29,7 @@ const customers = [
     image_url: '/customers/hector-simpson.png',
   },
   {
-    id: '50ca3e18-62cd-11ee-8c99-0242ac120002',
+    id: '50ca3e18-62cd-11ee-8c99-0242ac120002</li>',
     name: 'Steven Tey',
     email: 'steven@tey.com',
     image_url: '/customers/steven-tey.png',
