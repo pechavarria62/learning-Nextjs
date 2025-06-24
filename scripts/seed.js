@@ -4,7 +4,7 @@ require('dotenv').config({ path: __dirname + '/../.env' });
 const { PrismaClient } = require('@prisma/client');
 const bcrypt = require('bcrypt');
 const prisma = new PrismaClient();
-const { users, customers, revenue, invoices } = require('./placeholder-data');
+const { users, customers, revenue, invoices } = require('../app/lib/placeholder-data.js');
 
 async function seedUsers() {
   for (const user of users) {
