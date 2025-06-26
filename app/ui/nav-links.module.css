@@ -3,6 +3,17 @@
     display: flex;
     align-items: center;
     gap: 8px;
+    background-color: #1c212c;
+    width: 130px;
+    height:auto;
+    padding-left: 12px;
+}
+.links:hover {
+    background-color: gray;
+    color: white;
+}
+.links:hover .icon {
+    color: red;
 }
 .icon {
     height: 20px;
@@ -11,4 +22,5 @@
 }
 .name {
     margin: 0;
+    
 }
