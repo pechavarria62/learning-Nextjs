@@ -1,6 +1,5 @@
 'use client';
 
-
 import {
   AtSymbolIcon,
   KeyIcon,
@@ -10,96 +9,122 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from './button';
 
-const mockUsers = [
-  { email: 'user@example.com', password: 'password123' },
-  { email: 'danny@ramp.com', password: 'securepass' },
-];
 
 export default function LoginForm() {
   const [formData, setFormData] = useState({ email: '', password: '' });
+    const [rememberMe, setRememberMe] = useState(false); // Add state for remember me
   const [error, setError] = useState('');
   const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const user = mockUsers.find(
-      (u) => u.email === formData.email && u.password === formData.password
-    );
-
-    if (user) {
-      router.push('/'); // ✅ Redirect to homepage
-    } else {
-      setError('Invalid email or password');
+    setError('');
+    try {
+      const res = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({...formData, rememberMe }), // Include rememberMe in the request
+      });
+      const data = await res.json();
+      if (data.success) {
+        router.push('/'); // Redirect on success
+      } else {
+        setError(data.error || 'Invalid email or password');
+      }
+    } catch {
+      setError('Something went wrong. Please try again.');
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-3">
-      <div className="flex-1 rounded-lg bg-gray-50 px-6 pb-4 pt-8">
-        <h1 className="mb-3 text-2xl">Please log in to continue.</h1>
-        <div className="w-full">
-          <div>
-            <label
-              className="mb-3 mt-5 block text-xs font-medium text-gray-900"
-              htmlFor="email"
-            >
-              Email
-            </label>
-            <div className="relative">
-              <input
-                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
-                id="email"
-                type="email"
-                name="email"
-                placeholder="Enter your email address"
-                required
-                value={formData.email}
-                onChange={(e) =>
-                  setFormData({ ...formData, email: e.target.value })
-                }
-              />
+    <div className=' flex items-center justify-center'>  
+      <form onSubmit={handleSubmit} className="shadow-lg rounded-lg p-6 w-full max-w-md flex items-center justify-center">
+        <div className="  flex-1 flex-col items-center justify-center p-6 space-y-4">
+          <h1 className="mb-3 text-2xl flex items-center justify-center content-center">Please log in to continue.</h1>
+          <div className="w-56">
+            <div>
+              <label
+                className=" flex mb-3 mt-5 text-xs items-center justify-center content-center"
+                htmlFor="email"
+              >
+                {/* Email */}
+              </label>
+              <div className="relative items-center justify-center content-center">
+                <input
+                  className="peer block rounded-md border border-gray-100 py-[9px] pl-10 text-sm outline-0 placeholder:text-gray-500"
+                  id="email"
+                  type="email"
+                  name="email"
+                  placeholder="Enter your email address"
+                  required
+                  value={formData.email}
+                  onChange={(e) =>
+                    setFormData({ ...formData, email: e.target.value })
+                  }
+                />
+              </div>
+            </div>
+
+            <div className="mt-4">
+              <label
+                className="mb-3 mt-5"
+                htmlFor="password"
+              >
+                <br/>
+                {/* Password */}
+              </label>
+              <div className="relative">
+                <input
+                  className="peer rounded-md border border-gray-200 py-[9px] pl-10 text-sm placeholder:text-gray-500"
+                  id="password"
+                  type="password"
+                  name="password"
+                  placeholder="Enter password"
+                  required
+                  minLength={6}
+                  value={formData.password}
+                  onChange={(e) =>
+                    setFormData({ ...formData, password: e.target.value })
+                  }
+                />
+              </div>
             </div>
           </div>
 
-          <div className="mt-4">
-            <label
-              className="mb-3 mt-5 block text-xs font-medium text-gray-900"
-              htmlFor="password"
-            >
-              Password
-            </label>
-            <div className="relative">
-              <input
-                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
-                id="password"
-                type="password"
-                name="password"
-                placeholder="Enter password"
-                required
-                minLength={6}
-                value={formData.password}
-                onChange={(e) =>
-                  setFormData({ ...formData, password: e.target.value })
-                }
+          <div className="mt-8 items-center justify-center content-center flex">
+            <LoginButton />
+          </div>
+
+          {error && (
+            <div className="flex items-center text-sm text-red-600 mt-4">
+              <ExclamationCircleIcon 
+                style={{
+                  width:'10px',
+                  height:'10px',
+                  marginRight: '4px',
+
+                }} 
               />
+              {error}
             </div>
+          )}
+
+             {/* Remember Me checkbox */}
+          <div className="flex items-center mt-4 space-x-px">
+            <input
+              id="rememberMe"
+              type="checkbox"
+              checked={rememberMe}
+              onChange={(e) => setRememberMe(e.target.checked)}
+              className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+            />
+            <label htmlFor="rememberMe" className="ml-2 block text-sm text-gray-900">
+              Remember me
+            </label>
           </div>
         </div>
-
-        <div className="mt-10">
-          <LoginButton />
-        </div>
-
-        {error && (
-          <div className="flex items-center text-sm text-red-600 mt-4">
-            <ExclamationCircleIcon className="h-5 w-5 mr-1" />
-            {error}
-          </div>
-        )}
-
-        <div className="flex h-8 items-end space-x-1 mt-10">Remember me</div>
-      </div>
-    </form>
+      </form>
+    </div>
   );
 }
 

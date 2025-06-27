@@ -5,7 +5,7 @@ import './global.css';
 
 export default function Page() {
   return (
-    <div className='bg-gradient-to-br from-blue-400 via-purple-400 to-pink-400 min-h-screen'>
+    <div className=''>
       <SideNav />
     </div>
   );
