@@ -3,7 +3,7 @@ import LoginForm from "../ui/login-form";
 
 export default function login() {
   return (
-    <div className='flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-400 via-purple-400 to-pink-400 h-52 w-full'>
+    <div className="w-full bg-black/50 h-screen flex items-center justify-center ">
       <LoginForm />
     </div>
   );

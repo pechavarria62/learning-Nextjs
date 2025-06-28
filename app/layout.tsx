@@ -1,5 +1,5 @@
-import './ui/global.css';
-import './global.css';
+// import './ui/global.css';
+import './ui/css/admin.css';
 
 export default function RootLayout({
   children,
@@ -8,7 +8,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body >{children}</body>
+      <body className='flex min-h-screen items-center justify-center bg-black'>{children}</body>
     </html>
   );
 }
