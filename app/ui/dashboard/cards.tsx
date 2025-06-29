@@ -21,7 +21,7 @@ export default async function CardWrapper() {
   const totalPendingInvoices = 0;
   const numberOfInvoices = 0;
   const numberOfCustomers = 0;
-  const filteredInvoices = await fetchFilteredInvoices('', 1);
+  const filteredInvoices = await fetchFilteredInvoices('invoices.amount', 1);
 
   return (
     <>

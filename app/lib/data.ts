@@ -39,12 +39,14 @@ export async function fetchRevenue() {
 export async function fetchLatestInvoices() {
   try {
     const [rows] = await pool.query<RowDataPacket[]>(
-      `SELECT invoices.amount, customers.name, customers.image_url, customers.email, invoices.id
-       FROM invoices
-       JOIN customers ON invoices.customer_id = customers.id
-       ORDER BY invoices.date DESC
+      `SELECT invoice.amount, customer.name, customer.image_url, customer.email, invoice.id
+       FROM invoice
+       JOIN customer ON invoice.customer_id = customer.id
+       ORDER BY invoice.date DESC
        LIMIT 5`
     );
+    console.log(rows, 'Rows fetched from revenue table');
+
     // Use LatestInvoiceRaw here for type safety
     const latestInvoices = (rows as LatestInvoiceRaw[]).map((invoice) => ({
       ...invoice,
