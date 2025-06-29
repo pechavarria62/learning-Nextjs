@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss';
+import fonts from './app/ui/fonts';
 
 const config: Config = {
   content: [
@@ -17,6 +18,13 @@ const config: Config = {
           500: '#0070F3',
           600: '#2F6FEB',
         },
+      },
+      fontFamily: {
+        primary: fonts.primary,
+        secondary: fonts.secondary,
+        heading: fonts.heading,
+        monospace: fonts.monospace,
+        lusitana: fonts.lusitana,
       },
     },
     keyframes: {

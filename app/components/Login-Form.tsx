@@ -5,8 +5,8 @@ import {
 } from '@heroicons/react/24/outline';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Button } from './button';
-import Link from 'next/link';
+import { Button } from '../ui/button';
+
 
 export default function LoginForm() {
   const [formData, setFormData] = useState({ email: '', password: '' });
@@ -35,27 +35,25 @@ export default function LoginForm() {
   };
 
   return (
-    <div className='flex items-center justify-center border shadow-black-md bg-white rounded w-90 h-48'>  
-      <form onSubmit={handleSubmit} className="space-y-4 p-6  w-full">
-        <div className=" w-full flex-1 flex-col  p-6">
-          <h1 className="mb-6 text-2xl font-bold text-center text-gray-800">
-          Sign In.
-          </h1>
-          <div className=" w-full">
+    <div className='flex items-center justify-center border shadow-lg rounded  w-90 h-48'>  
+      <form onSubmit={handleSubmit} className=" p-6 w-auto max-w-md flex items-center justify-center">
+        <div className="  flex-1 flex-col items-center justify-center p-6 space-y-4">
+          <h1 className="mb-3 text-2xl flex items-center justify-center content-center text-gray-300">Please log in to continue.</h1>
+          <div className="">
             <div>
               <label
-                className="block text-sm font-medium text-gray-600 mb-1"
+                className=" flex mb-3 mt-5 text-xs items-center justify-center content-center"
                 htmlFor="email"
               >
                 Email
               </label>
-              <div className="relative">
+              <div className="relative flex items-center justify-center content-center">
                 <input
-                  className="peer w-full block rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-0 placeholder:text-gray-500"
+                  className="peer block rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-0 placeholder:text-gray-500"
                   id="email"
                   type="email"
                   name="email"
-                  placeholder="your@email.com"
+                  placeholder="Enter your email address"
                   required
                   value={formData.email}
                   onChange={(e) =>
@@ -67,19 +65,19 @@ export default function LoginForm() {
 
             <div>
               <label
-                className="block text-sm font-medium text-gray-600 mb-1"
+                className="flex mb-3 mt-5 text-xs items-center justify-center content-center"
                 htmlFor="password"
               >
                 <br/>
                 Password
               </label>
-              <div className=" relative">
+              <div className="relative flex items-center justify-center content-center">
                 <input
-                  className=" w-full peer block rounded-md border border-gray-200 py-[9px] pl-10 text-sm placeholder:text-gray-500"
+                  className="peer block rounded-md border border-gray-200 py-[9px] pl-10 text-sm placeholder:text-gray-500"
                   id="password"
                   type="password"
                   name="password"
-                  placeholder="••••••••"
+                  placeholder="Enter password"
                   required
                   minLength={6}
                   value={formData.password}
@@ -90,35 +88,9 @@ export default function LoginForm() {
               </div>
             </div>
           </div>
-              {/* Remember Me and Forgot Password */}
-          <div className="flex items-center mt-4 justify-between w-full">
-            <div className="flex items-center">
-              <input
-                id="rememberMe"
-                type="checkbox"
-                checked={rememberMe}
-                onChange={(e) => setRememberMe(e.target.checked)}
-                className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-              />
-              <label htmlFor="rememberMe" className="ml-2 block text-sm text-gray-900">
-                Remember me
-              </label>
-            </div>
-            <Link
-              href="/forgot-password"
-              className="text-sm text-blue-500 hover:underline"
-            >
-              Forgot password?
-            </Link>
-          </div>
-          <div className="mt-8 items-center justify-center content-center flex w-full">
+
+          <div className="mt-8 items-center justify-center content-center flex">
             <LoginButton />
-          </div>
-          <div className="mt-4 text-center text-sm text-gray-600">
-            Don&#39;t have an account?{' '}
-            <Link href="/register" className="text-blue-500 hover:underline">
-              Sign up
-            </Link>
           </div>
 
           {error && (
@@ -135,7 +107,19 @@ export default function LoginForm() {
             </div>
           )}
 
-           
+             {/* Remember Me checkbox */}
+          <div className="flex items-center mt-4 space-x-px">
+            <input
+              id="rememberMe"
+              type="checkbox"
+              checked={rememberMe}
+              onChange={(e) => setRememberMe(e.target.checked)}
+              className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+            />
+            <label htmlFor="rememberMe" className="ml-2 block text-sm text-gray-900">
+              Remember me
+            </label>
+          </div>
         </div>
       </form>
     </div>
@@ -152,13 +136,12 @@ function LoginButton() {
         alignItems: 'center',
         justifyContent: 'center',
         gap: '6px',
-        width: '350px',
         height: '32px',
         padding: '14px',
         backgroundColor: '#3b82f6',
         color: 'white',
         fontSize: '14px',
-        borderRadius: '10px',
+        borderRadius: '9999px',
         border: 'none',
         cursor: 'pointer',
       }}
