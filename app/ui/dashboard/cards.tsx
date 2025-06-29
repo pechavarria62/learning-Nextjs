@@ -4,6 +4,9 @@ import {
   UserGroupIcon,
   InboxIcon,
 } from '@heroicons/react/24/outline';
+import React from 'react';
+import {fetchFilteredInvoices} from '@/app/lib/data';
+
 
 const iconMap = {
   collected: BanknotesIcon,
@@ -18,11 +21,12 @@ export default async function CardWrapper() {
   const totalPendingInvoices = 0;
   const numberOfInvoices = 0;
   const numberOfCustomers = 0;
+  const filteredInvoices = await fetchFilteredInvoices('', 1);
 
   return (
     <>
-      {/* NOTE: comment in this code when you get to this point in the course */}
 
+      <Card title="Collected" value={filteredInvoices.length} type="collected" />
       <Card title="Collected" value={totalPaidInvoices} type="collected" />
       <Card title="Pending" value={totalPendingInvoices} type="pending" />
       <Card title="Total Invoices" value={numberOfInvoices} type="invoices" />

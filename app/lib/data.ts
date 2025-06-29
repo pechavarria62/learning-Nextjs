@@ -38,14 +38,15 @@ export async function fetchRevenue() {
 
 export async function fetchLatestInvoices() {
   try {
-    const [rows] = await pool.query<LatestInvoiceRaw[]>(
+    const [rows] = await pool.query<RowDataPacket[]>(
       `SELECT invoices.amount, customers.name, customers.image_url, customers.email, invoices.id
        FROM invoices
        JOIN customers ON invoices.customer_id = customers.id
        ORDER BY invoices.date DESC
        LIMIT 5`
     );
-    const latestInvoices = rows.map((invoice) => ({
+    // Use LatestInvoiceRaw here for type safety
+    const latestInvoices = (rows as LatestInvoiceRaw[]).map((invoice) => ({
       ...invoice,
       amount: formatCurrency(invoice.amount),
     }));
@@ -92,7 +93,7 @@ export async function fetchFilteredInvoices(
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
 
   try {
-    const [rows] = await pool.query<InvoicesTable[]>(
+    const [rows] = await pool.query<RowDataPacket[]>(
       `SELECT
         invoices.id,
         invoices.amount,
@@ -121,7 +122,7 @@ export async function fetchFilteredInvoices(
         offset,
       ]
     );
-    return rows;
+    return rows as InvoicesTable[];
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch invoices.');
@@ -158,7 +159,7 @@ export async function fetchInvoicesPages(query: string) {
 
 export async function fetchInvoiceById(id: string) {
   try {
-    const [rows] = await pool.query<InvoiceForm[]>(
+    const [rows] = await pool.query<RowDataPacket[]>(
       `SELECT
         invoices.id,
         invoices.customer_id,
@@ -168,7 +169,7 @@ export async function fetchInvoiceById(id: string) {
       WHERE invoices.id = ?`,
       [id]
     );
-    const invoice = rows.map((invoice) => ({
+    const invoice = (rows as InvoiceForm[]).map((invoice) => ({
       ...invoice,
       amount: invoice.amount / 100,
     }));
@@ -181,14 +182,14 @@ export async function fetchInvoiceById(id: string) {
 
 export async function fetchCustomers() {
   try {
-    const [rows] = await pool.query<CustomerField[]>(
+    const [rows] = await pool.query<RowDataPacket[]>(
       `SELECT
         id,
         name
       FROM customers
       ORDER BY name ASC`
     );
-    return rows;
+    return rows as CustomerField[];
   } catch (err) {
     console.error('Database Error:', err);
     throw new Error('Failed to fetch all customers.');
@@ -197,7 +198,7 @@ export async function fetchCustomers() {
 
 export async function fetchFilteredCustomers(query: string) {
   try {
-    const [rows] = await pool.query<CustomersTableType[]>(
+    const [rows] = await pool.query<RowDataPacket[]>(
       `SELECT
         customers.id,
         customers.name,
@@ -216,7 +217,7 @@ export async function fetchFilteredCustomers(query: string) {
       [`%${query}%`, `%${query}%`]
     );
 
-    const customers = rows.map((customer) => ({
+    const customers = (rows as CustomersTableType[]).map((customer) => ({
       ...customer,
       total_pending: formatCurrency(customer.total_pending),
       total_paid: formatCurrency(customer.total_paid),
@@ -231,11 +232,11 @@ export async function fetchFilteredCustomers(query: string) {
 
 export async function getUser(email: string) {
   try {
-    const [rows] = await pool.query<User[]>(
+    const [rows] = await pool.query<RowDataPacket[]>(
       'SELECT * FROM users WHERE email = ?',
       [email]
     );
-    return rows[0];
+    return (rows as User[])[0];
   } catch (error) {
     console.error('Failed to fetch user:', error);
     throw new Error('Failed to fetch user.');
